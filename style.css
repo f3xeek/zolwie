@@ -1,0 +1,50 @@
+body {
+    background: darkslategray;
+}
+/* -------INDEX------- */
+label.nickname {
+    color: aliceblue;
+    margin: 0 auto;
+
+}
+.headers{
+    color: aliceblue;
+    text-align: center;
+}
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginPage {
+    justify-content: center;
+    height: 40vh;
+}
+
+.joinButton {
+    width: 100px;
+    margin: 10px auto;
+    border-radius: 15px;
+}
+
+/* -------LOBBY------- */
+h2.headers{
+    font-size: 3em;
+}
+
+.self{
+    color: yellow !important;
+}
+.playerDiv{
+    border:2px solid white;
+    color: aliceblue;
+    border-radius: 20px;
+    padding: 15px;
+    font-size: 2em;
+    margin: 0 20px;
+    min-width: 100px;
+}
+.flex-row {
+    display: flex;
+    justify-content: space-around;
+}
