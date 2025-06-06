@@ -30,8 +30,7 @@ window.addEventListener("load", async () => {
     readyButton.addEventListener("click", async () => {
         const data = await gets.postPlayerReady()
         if (data.status == "fail") alert(data.message)
-        else {
-            reRender()
-        }
+        else reRender()
+
     })
 });

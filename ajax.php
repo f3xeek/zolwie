@@ -102,6 +102,18 @@ if (isset($_POST['acc']) && $_POST['acc'] == 'joinNewGame') {
     else
         echo json_encode(['status' => 'fail', 'message' => "readying up failed"]);
 
+    $ready = true;
+    foreach ($players as $player) {
+        if ($player->turn == 0)
+            $ready = false;
+    }
+
+    if ($ready && sizeof($players) > 1) {
+        $query = "UPDATE gry SET state = 1, WHERE id = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("is", $_SESSION["gameId"]);
+        $stmt->execute();
+    }
 
 } else {
     echo json_encode("NIE DZIALA");
