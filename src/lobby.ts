@@ -11,13 +11,27 @@ window.addEventListener("load", async () => {
                 const cell = document.getElementById("player" + (id + 1))
                 if (cell) {
                     cell.innerText = player.name
+                    cell.classList.remove("ready")
+                    cell.classList.add("unready")
+                    if (player.turn == 1) {
+                        cell.classList.remove("unready")
+                        cell.classList.add("ready")
+                    }
                     if (data.selfId == player.id) cell.classList.add("self")
+
                 }
             });
-            console.log(data.players);
         }
     }
     reRender()
     setInterval(reRender, 3000)
 
+    const readyButton = document.getElementById("readyButton") as HTMLButtonElement
+    readyButton.addEventListener("click", async () => {
+        const data = await gets.postPlayerReady()
+        if (data.status == "fail") alert(data.message)
+        else {
+            reRender()
+        }
+    })
 });

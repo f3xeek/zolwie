@@ -9,7 +9,9 @@ interface PlayerGameResponse extends BasicResponse {
   players?: Player[];
   selfId?: number;
 }
-
+interface PlayerReadyResponse extends BasicResponse {
+  ready?: boolean;
+}
 const gets = {
   joinGame: async function (nickname: string): Promise<BasicResponse> {
     const data = await fetch("ajax.php", {
@@ -27,6 +29,17 @@ const gets = {
     const data = await fetch("ajax.php?" + params.toString());
     return await data.json();
   },
+  postPlayerReady: async function (): Promise<PlayerReadyResponse> {
+    const data = await fetch("ajax.php", {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({ acc: "playerReadySwap" }),
+    });
+    return await data.json()
+  }
 };
 
 export { gets };

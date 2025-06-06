@@ -1,16 +1,19 @@
 body {
     background: darkslategray;
 }
+
 /* -------INDEX------- */
 label.nickname {
     color: aliceblue;
     margin: 0 auto;
 
 }
-.headers{
+
+.headers {
     color: aliceblue;
     text-align: center;
 }
+
 .flex-col {
     display: flex;
     flex-direction: column;
@@ -28,15 +31,24 @@ label.nickname {
 }
 
 /* -------LOBBY------- */
-h2.headers{
+h2.headers {
     font-size: 3em;
 }
 
-.self{
+.self {
     color: yellow !important;
 }
-.playerDiv{
-    border:2px solid white;
+
+.unready {
+    background: red;
+}
+
+.ready {
+    background: green;
+}
+
+.playerDiv {
+    border: 2px solid white;
     color: aliceblue;
     border-radius: 20px;
     padding: 15px;
@@ -44,7 +56,27 @@ h2.headers{
     margin: 0 20px;
     min-width: 100px;
 }
+
 .flex-row {
     display: flex;
     justify-content: space-around;
+}
+
+.readyButton {
+    font-size: 2em;
+    padding: 15px;
+    background: green;
+    color: aliceblue;
+    border-radius: 15px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.center {
+    margin: 30px auto;
+    width: 200px;
+}
+
+.readyButton:hover {
+    background: darkgreen;
 }

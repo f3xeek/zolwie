@@ -16,7 +16,15 @@ class Player
         $this->id = $id;
     }
 }
-
+function getUsersFromGame($mysqli, $id)
+{
+    $query = 'Select * from gry where id = ?';
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    return json_decode($row["data"])->players;
+}
 if (isset($_POST['acc']) && $_POST['acc'] == 'joinNewGame') {
     if (!isset($_SESSION["gameId"])) {
         $query = 'Select * from gry where state=0';
@@ -64,13 +72,37 @@ if (isset($_POST['acc']) && $_POST['acc'] == 'joinNewGame') {
     if (!isset($_SESSION["gameId"])) {
         echo json_encode(['status' => "fail", 'message' => "Ta przeglądarka nie jest obecnie w żadnej grze."]);
     } else {
-        $query = 'Select * from gry where id = ?';
-        $stmt = $mysqli->prepare($query);
-        $stmt->bind_param("s", $_SESSION["gameId"]);
-        $stmt->execute();
-        $row = $stmt->get_result()->fetch_assoc();
-        echo json_encode(['status' => 'success', 'players' => json_decode($row["data"])->players, 'selfId' => $_SESSION["playerId"]]);
+        $players = getUsersFromGame($mysqli, $_SESSION["gameId"]);
+        echo json_encode(['status' => 'success', 'players' => $players, 'selfId' => $_SESSION["playerId"]]);
     }
+} else if (isset($_POST['acc']) && $_POST['acc'] == 'playerReadySwap') {
+    $players = getUsersFromGame($mysqli, $_SESSION["gameId"]);
+    $filtered = array_filter($players, function ($player) {
+        return $player->id == $_SESSION['playerId'];
+    });
+
+    $key = array_keys($filtered)[0];
+
+    $query = "UPDATE gry SET data = ? where id = ?";
+    $stmt = $mysqli->prepare($query);
+
+
+    if ($filtered[$key]->turn == 0)
+        $players[$key]->turn = 1;
+    else
+        $players[$key]->turn = 0;
+    $data = json_encode(["players" => $players]);
+    $stmt->bind_param("si", $data, $_SESSION["gameId"]);
+    $stmt->execute();
+
+    if ($players[$key]->turn == 0)
+        echo json_encode(['status' => 'success', 'ready' => false]);
+    else if ($players[$key]->turn == 1)
+        echo json_encode(['status' => 'success', 'ready' => true]);
+    else
+        echo json_encode(['status' => 'fail', 'message' => "readying up failed"]);
+
+
 } else {
     echo json_encode("NIE DZIALA");
 }
