@@ -18,7 +18,7 @@ class Player
 }
 
 if (isset($_POST['acc']) && $_POST['acc'] == 'joinNewGame') {
-    if(!isset($_SESSION["gameId"])){
+    if (!isset($_SESSION["gameId"])) {
         $query = 'Select * from gry where state=0';
         $stmt = $mysqli->prepare($query);
 
@@ -44,33 +44,34 @@ if (isset($_POST['acc']) && $_POST['acc'] == 'joinNewGame') {
         if ($ingame) {
             $query = "UPDATE gry SET state = ?, data = ? WHERE id = ?";
             $stmt = $mysqli->prepare($query);
-            $gameId =  $row["id"];
-            $stmt->bind_param("iss", $state, $data,$gameId);
+            $gameId = $row["id"];
+            $stmt->bind_param("iss", $state, $data, $gameId);
             $stmt->execute();
         } else {
             $query = "INSERT INTO gry(data,state) VALUES(?,?) ";
             $stmt = $mysqli->prepare($query);
             $stmt->bind_param("si", $data, $state);
             $stmt->execute();
-            $gameId = $stmt -> insert_id;
+            $gameId = $stmt->insert_id;
         }
         $_SESSION["gameId"] = $gameId;
         $_SESSION["playerId"] = $count;
-        echo json_encode(['status'=>'success']);
-    }else echo json_encode(['status'=>"fail",'message'=>"Ta przeglądarka jest już w grze."]);
+        echo json_encode(['status' => 'success']);
+    } else
+        echo json_encode(['status' => "fail", 'message' => "Ta przeglądarka jest już w grze."]);
 
-}else if((isset($_GET['acc']) && $_GET['acc'] == 'getPlayerGame')) {
-    if(!isset($_SESSION["gameId"])){
-        echo json_encode(['status'=>"fail",'message'=>"Ta przeglądarka nie jest obecnie w żadnej grze."]);
-    }else{
+} else if ((isset($_GET['acc']) && $_GET['acc'] == 'getPlayerGame')) {
+    if (!isset($_SESSION["gameId"])) {
+        echo json_encode(['status' => "fail", 'message' => "Ta przeglądarka nie jest obecnie w żadnej grze."]);
+    } else {
         $query = 'Select * from gry where id = ?';
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param("s", $_SESSION["gameId"]);
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc();
-        echo json_encode( ['status'=>'success', 'players'=>json_decode($row["data"])->players,'selfId'=>$_SESSION["playerId"]]);
+        echo json_encode(['status' => 'success', 'players' => json_decode($row["data"])->players, 'selfId' => $_SESSION["playerId"]]);
     }
-}else {
+} else {
     echo json_encode("NIE DZIALA");
 }
 // $kraj = rawurldecode($_POST["kraje"]);

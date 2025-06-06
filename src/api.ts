@@ -7,7 +7,7 @@ interface BasicResponse {
 
 interface PlayerGameResponse extends BasicResponse {
   players?: Player[];
-  selfId?:number;
+  selfId?: number;
 }
 
 const gets = {
