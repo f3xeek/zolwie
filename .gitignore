@@ -138,3 +138,4 @@ dist/
 #others
 hidden.php
 bundle*
+.DS_Store
