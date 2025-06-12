@@ -1,8 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: {index:'./dist/index.js',
-            lobby:'./dist/lobby.js'
+    entry: {
+        index: './dist/index.js',
+        lobby: './dist/lobby.js',
+        game: './dist/game.js'
     },
     output: {
         filename: 'bundle.[name].js',

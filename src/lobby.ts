@@ -5,9 +5,14 @@ window.addEventListener("load", async () => {
     if (styles) styles.href = styles.href + "?v='" + new Date().getTime();
     async function reRender() {
         const data = await gets.getPlayerGame();
-        if (data.status == "fail") { alert(data.message); location.href = "/zolwie" }
+        const pathParts = window.location.pathname.split('/');
+        pathParts.pop();
+
+        if (data.status == "fail") { alert(data.message); location.href = pathParts.join('/') + '/' }
         else if (data.players) {
+            let ready = true
             data.players.forEach((player, id) => {
+                if (player.turn < 1) ready = false
                 const cell = document.getElementById("player" + (id + 1))
                 if (cell) {
                     cell.innerText = player.name
@@ -18,9 +23,9 @@ window.addEventListener("load", async () => {
                         cell.classList.add("ready")
                     }
                     if (data.selfId == player.id) cell.classList.add("self")
-
                 }
             });
+            if (ready && data.players.length > 1) location.href = pathParts.join('/') + '/game.html'
         }
     }
     reRender()

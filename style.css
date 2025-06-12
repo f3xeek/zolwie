@@ -80,3 +80,17 @@ h2.headers {
 .readyButton:hover {
     background: darkgreen;
 }
+
+/* -------GAME------- */
+.flex-end {
+    display: flex;
+    justify-content: space-between;
+}
+
+#playerCard {
+    margin: 10px;
+    width: 150px;
+    height: 150px;
+    background-image: url("./turtles.gif");
+    background-position: -300px -1150px;
+}
