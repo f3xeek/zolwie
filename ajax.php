@@ -109,9 +109,9 @@ if (isset($_POST['acc']) && $_POST['acc'] == 'joinNewGame') {
     }
 
     if ($ready && sizeof($players) > 1) {
-        $query = "UPDATE gry SET state = 1, WHERE id = ?";
+        $query = "UPDATE gry SET state = 1 WHERE id = ?";
         $stmt = $mysqli->prepare($query);
-        $stmt->bind_param("is", $_SESSION["gameId"]);
+        $stmt->bind_param("i", $_SESSION["gameId"]);
         $stmt->execute();
     }
 
