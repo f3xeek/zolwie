@@ -43,6 +43,11 @@ const gets = {
         });
         return await data.json();
     },
+    getPlayerGame: async function<T> (): Promise<T> {
+        const params = new URLSearchParams({ acc: "getGameInfo" });
+        const data = await fetch("ajax.php?" + params.toString());
+        return await data.json();
+    },
 };
 
 export { gets };
