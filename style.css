@@ -94,3 +94,6 @@ h2.headers {
     background-image: url("./turtles.gif");
     background-position: -300px -1150px;
 }
+#gameBoard, #playerSpace{
+    height: 97.5vh;
+}

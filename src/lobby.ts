@@ -4,7 +4,7 @@ window.addEventListener("load", async () => {
     const styles = document.getElementById("styles") as HTMLLinkElement
     if (styles) styles.href = styles.href + "?v='" + new Date().getTime();
     async function reRender() {
-        const data = await gets.getPlayerGame();
+        const data = await gets.getPlayerLobby();
         const pathParts = window.location.pathname.split('/');
         pathParts.pop();
 

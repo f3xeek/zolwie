@@ -4,7 +4,7 @@ window.addEventListener("load", async () => {
     const styles = document.getElementById("styles") as HTMLLinkElement
     if (styles) styles.href = styles.href + "?v='" + new Date().getTime();
 
-    const data = await gets.getPlayerGame()
+    const data = await gets.getPlayerLobby()
     if (data.status == "success") location.href = "lobby.html";
     const submitbutton = document.getElementById("joinButton")
     const nicknameInput = document.getElementById("nicknameInput") as HTMLInputElement;

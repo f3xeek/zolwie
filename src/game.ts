@@ -11,4 +11,4 @@ window.addEventListener("load", () => {
 })
 const test = document.getElementById("playerSpace") as HTMLCanvasElement
 const ss = test.getContext("2d")
-if (ss) ss.fillRect(0, 0, 1000, 10000)
+if (ss) ss.fillRect(0, 0, 2000, 2000)

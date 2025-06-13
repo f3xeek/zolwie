@@ -1,6 +1,6 @@
 interface Player {
-  id: number | string;
-  name: string;
-  turn: number;
+    id: number | string;
+    name: string;
+    turn: number;
 }
-export {Player}
+export { Player };
