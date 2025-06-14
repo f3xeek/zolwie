@@ -1,6 +1,8 @@
 import { gets } from "./api"
 import { renderPlayerCells, drawGameBoard,renderPlayerChip,renderPlayerHand } from "./render"
+
 import sheet from "./spritesheet";
+
 window.addEventListener("load", async () => {
     drawGameBoard();
     renderPlayerChip(false);
@@ -17,4 +19,4 @@ window.addEventListener("load", async () => {
     }
 })
 const test = sheet.getByName("card_blue_plus");
-if (test) renderPlayerHand([test,test, test, test, test], -1);
+if (test) renderPlayerHand([test,test, test, test, test], -1,true);

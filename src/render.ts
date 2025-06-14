@@ -1,12 +1,19 @@
 import { Player,iSprite } from "./interfaces"
 import spriteSheet from "./spritesheet"
+import { initLstenersForCards } from "./actions";
 
 const spritesheetImage = document.getElementById("spritesheet") as HTMLImageElement
 const gameBoardCanvas = document.getElementById("gameBoard") as HTMLCanvasElement
-const gameBoardCTX = gameBoardCanvas.getContext("2d");
 const playerCanvas = document.getElementById("playerSpace") as HTMLCanvasElement
-const playerCTX = playerCanvas.getContext("2d");
+let playerCTX: CanvasRenderingContext2D | null,
+    gameBoardCTX: CanvasRenderingContext2D | null;
 
+if (playerCanvas) {
+    playerCanvas.width = playerCanvas.getBoundingClientRect().width;
+    playerCanvas.height = playerCanvas.getBoundingClientRect().height;
+    playerCTX = playerCanvas.getContext("2d");
+    gameBoardCTX = gameBoardCanvas.getContext("2d");
+}
 const renderSprite = (customCtx:CanvasRenderingContext2D,sprite:iSprite,x:number,y:number):void =>{
     type AssetName = keyof typeof spriteSheet.dimensions
     const typedsprite = sprite.type as AssetName
@@ -53,18 +60,25 @@ const renderPlayerChip = (exposed:boolean, name?:string):void =>{
     else chip = spriteSheet.getByName("chip_blank") 
     if (chipContext && chip) renderSprite(chipContext, chip, 0,0)
 }
-
-const renderPlayerHand = (hand:iSprite[], highlighted: number): void => {
+const clearCanvas = (customCTX:CanvasRenderingContext2D):void =>{
+    customCTX.clearRect(0,0,2000,2000)
+}
+const renderPlayerHand = (hand:iSprite[], highlighted: number,initial=false): void => {
     if (playerCTX) {
+        clearCanvas(playerCTX)
+        const transforms:DOMMatrix[] = []
         playerCTX.save();
-        playerCTX.translate(700, 1100);
+        playerCTX.translate(470, 700);
+        
         playerCTX.rotate(-1/3*Math.PI );
         playerCTX.strokeStyle = "red";
         playerCTX.fillStyle = "red";
+        playerCTX.scale(.7,.7)
         hand.forEach((card, i) => {
-            
+            transforms.push(playerCTX.getTransform())
             if (highlighted == i) {
                 playerCTX.scale(1.2, 1.2);
+                playerCTX.beginPath()
                 playerCTX.roundRect(-5, -60, 160, 240, 15);
                 playerCTX.fill();
                 renderSprite(playerCTX, card, 0, -55);
@@ -78,6 +92,8 @@ const renderPlayerHand = (hand:iSprite[], highlighted: number): void => {
 
         });
         playerCTX.restore();
+        if (initial) initLstenersForCards(transforms);
+        
     }
 };
 export { renderPlayerCells, drawGameBoard, renderPlayerChip, renderPlayerHand };
