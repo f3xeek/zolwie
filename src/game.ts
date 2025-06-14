@@ -1,7 +1,6 @@
 import { gets } from "./api"
-import { renderPlayerCells, drawGameBoard,renderPlayerChip } from "./render"
-
-
+import { renderPlayerCells, drawGameBoard,renderPlayerChip,renderPlayerHand } from "./render"
+import sheet from "./spritesheet";
 window.addEventListener("load", async () => {
     drawGameBoard();
     renderPlayerChip(false);
@@ -17,7 +16,5 @@ window.addEventListener("load", async () => {
         }
     }
 })
-
-const test = document.getElementById("playerSpace") as HTMLCanvasElement
-const ss = test.getContext("2d")
-if (ss) ss.fillRect(0, 0, 2000, 2000)
+const test = sheet.getByName("card_blue_plus");
+if (test) renderPlayerHand([test,test, test, test, test], -1);
