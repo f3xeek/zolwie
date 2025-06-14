@@ -53,7 +53,7 @@ h2.headers {
     border-radius: 20px;
     padding: 15px;
     font-size: 2em;
-    margin: 0 20px;
+    margin: 20px;
     min-width: 100px;
 }
 
@@ -87,13 +87,14 @@ h2.headers {
     justify-content: space-between;
 }
 
-#playerCard {
+#playerChip {
     margin: 10px;
     width: 150px;
     height: 150px;
-    background-image: url("./turtles.gif");
-    background-position: -300px -1150px;
 }
-#gameBoard, #playerSpace{
+#gameBoard{
     height: 97.5vh;
+}
+#playerSpace{
+    height: 85vh;
 }

@@ -51,3 +51,4 @@ const gets = {
 };
 
 export { gets };
+export { PlayerGameResponse}

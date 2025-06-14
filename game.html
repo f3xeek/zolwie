@@ -13,11 +13,20 @@
     <img src="turtles.gif" alt="spritesheet" id="spritesheet" style="display: none;">
     <div class="flex-end">
         <div>
-            <canvas id="playerSpace" width="1500" height="1300"></canvas>
+            <div class="flex-row">
+                <div class="playerDiv" id="player1"></div>
+                <div class="playerDiv" id="player2"></div>
+                <div class="playerDiv" id="player3"></div>
+                <div class="playerDiv" id="player4"></div>
+                <div class="playerDiv" id="player5"></div>
+            </div>
+            <div>
+                <canvas id="playerSpace" width="1500" height="1300"></canvas>
+            </div>
         </div>
         <div class="flex-row">
-            <div id="playerCard"> </div>
-            <canvas id="gameBoard" class="gmaeBoardCanvas" width="650" height="1300"></canvas>
+            <canvas id="playerChip" width="150" height="150"></canvas>
+            <canvas id="gameBoard" class="gmaeBoardCanvas" width="660" height="1330"></canvas>
         </div>
     </div>
 </body>

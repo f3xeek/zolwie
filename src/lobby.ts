@@ -1,5 +1,5 @@
 import { gets } from "./api"
-
+import { renderPlayerCells } from "./render";
 window.addEventListener("load", async () => {
     const styles = document.getElementById("styles") as HTMLLinkElement
     if (styles) styles.href = styles.href + "?v='" + new Date().getTime();
@@ -9,22 +9,8 @@ window.addEventListener("load", async () => {
         pathParts.pop();
 
         if (data.status == "fail") { alert(data.message); location.href = pathParts.join('/') + '/' }
-        else if (data.players) {
-            let ready = true
-            data.players.forEach((player, id) => {
-                if (player.turn < 1) ready = false
-                const cell = document.getElementById("player" + (id + 1))
-                if (cell) {
-                    cell.innerText = player.name
-                    cell.classList.remove("ready")
-                    cell.classList.add("unready")
-                    if (player.turn == 1) {
-                        cell.classList.remove("unready")
-                        cell.classList.add("ready")
-                    }
-                    if (data.selfId == player.id) cell.classList.add("self")
-                }
-            });
+        else if (data.players && data.selfId!==undefined) {
+            const ready = renderPlayerCells(data.players,data.selfId,false);
             if (ready && data.players.length > 1) location.href = pathParts.join('/') + '/game.html'
         }
     }
