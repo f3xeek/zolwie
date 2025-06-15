@@ -7,12 +7,11 @@
         echo $data;
     }
     function beginGame($mysqli){
-        $data = getGameData($mysqli, $_POST["gameId"]);
-        var_dump($data);
+        $data = getGameData($mysqli, $_SESSION["gameId"]);
         $players = $data["players"];
         $players[0] -> turn = 2;
         $players[0] -> startOfTurn = time();
-        updateGameData($mysqli, $_SESSION["gameId"],array_merge($data,$players));
+        updateGameData($mysqli, $_SESSION["gameId"],json_encode(array_merge($data,$players)));
     }
     
 ?>

@@ -39,6 +39,7 @@
 
         if ($ready && sizeof($players) > 1) {
             updateGameData($mysqli,$_SESSION["gameId"],$data,1);
+            beginGame($mysqli);
         }else{
             updateGameData($mysqli,$_SESSION["gameId"],$data,0);
         }

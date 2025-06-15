@@ -12,7 +12,7 @@ function updateGameData($mysqli, $id,$data,$state=1)
 {
     $query = "UPDATE gry SET state = ?, data = ? WHERE id = ?";
     $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("iss", $state, $data, $id);
+    $stmt->bind_param("isi", $state, $data, $id);
     $stmt->execute();
 }
 ?>
