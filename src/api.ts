@@ -12,9 +12,10 @@ interface PlayerGameResponse extends BasicResponse {
 interface PlayerReadyResponse extends BasicResponse {
     ready?: boolean;
 }
+const hostname = "phpfiles/"
 const gets = {
     joinGame: async function (nickname: string): Promise<BasicResponse> {
-        const data = await fetch("ajax.php", {
+        const data = await fetch(hostname+"ajax.php", {
             method: "post",
             headers: {
                 Accept: "application/json",
@@ -29,11 +30,11 @@ const gets = {
     },
     getPlayerLobby: async function (): Promise<PlayerGameResponse> {
         const params = new URLSearchParams({ acc: "getPlayerGame" });
-        const data = await fetch("ajax.php?" + params.toString());
+        const data = await fetch(hostname + "ajax.php?" + params.toString());
         return await data.json();
     },
     postPlayerReady: async function (): Promise<PlayerReadyResponse> {
-        const data = await fetch("ajax.php", {
+        const data = await fetch(hostname + "ajax.php", {
             method: "post",
             headers: {
                 Accept: "application/json",
@@ -45,7 +46,7 @@ const gets = {
     },
     getPlayerGame: async function<T> (): Promise<T> {
         const params = new URLSearchParams({ acc: "getGameInfo" });
-        const data = await fetch("ajax.php?" + params.toString());
+        const data = await fetch(hostname + "ajax.php?" + params.toString());
         return await data.json();
     },
 };
