@@ -16,7 +16,6 @@ window.addEventListener("load", async () => {
     }
     reRender()
     setInterval(reRender, 3000)
-
     const readyButton = document.getElementById("readyButton") as HTMLButtonElement
     readyButton.addEventListener("click", async () => {
         const data = await gets.postPlayerReady()
@@ -24,4 +23,6 @@ window.addEventListener("load", async () => {
         else reRender()
 
     })
+    const clearSessionButton = document.getElementById("clearSession");
+    if(clearSessionButton) clearSessionButton.addEventListener("click", gets.clearSession);
 });

@@ -19,6 +19,8 @@ window.addEventListener("load", async () => {
             renderPlayerCells(data.players, data.selfId, true);
         }
     }
+    const clearSessionButton = document.getElementById("clearSession");
+    if(clearSessionButton) clearSessionButton.addEventListener("click", gets.clearSession);
 })
 const test = spritesheet.getByName("card_blue_plus");
 if (test) renderPlayerHand([test,test, test, test, test], -1,true);

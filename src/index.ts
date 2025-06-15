@@ -15,5 +15,6 @@ window.addEventListener("load", async () => {
             else alert(result.message)
         } else alert("Nick nie może być pusty!")
     })
-
+    const clearSessionButton = document.getElementById("clearSession");
+    if(clearSessionButton) clearSessionButton.addEventListener("click", gets.clearSession);
 })
