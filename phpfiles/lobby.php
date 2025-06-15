@@ -1,32 +1,28 @@
 <?php 
     include "utils.php";
-    function getPlayerGame($mysqli){
+    function getPlayers($mysqli){
         if (!isset($_SESSION["gameId"]) || !$_SESSION["gameId"]) {
             echo json_encode(['status' => "fail", 'message' => "Ta przeglądarka nie jest obecnie w żadnej grze."]);
         } else {
-            $players = getUsersFromGame($mysqli, $_SESSION["gameId"]);
+            $players = getGameData($mysqli, $_SESSION["gameId"])["players"];
             echo json_encode(['status' => 'success', 'players' => $players, 'selfId' => $_SESSION["playerId"]]);
         }
     }
     function playerReady($mysqli){
-        $players = getUsersFromGame($mysqli, $_SESSION["gameId"]);
+        $data = getGameData($mysqli, $_SESSION["gameId"]);
+        $players = $data["players"];
         $filtered = array_filter($players, function ($player) {
             return $player->id == $_SESSION['playerId'];
         });
 
         $key = array_keys($filtered)[0];
 
-        $query = "UPDATE gry SET data = ? where id = ?";
-        $stmt = $mysqli->prepare($query);
-
-
         if ($filtered[$key]->turn == 0)
             $players[$key]->turn = 1;
         else
             $players[$key]->turn = 0;
-        $data = json_encode(["players" => $players]);
-        $stmt->bind_param("si", $data, $_SESSION["gameId"]);
-        $stmt->execute();
+        $data = json_encode(array_merge($data,["players" => $players]));
+        
 
         if ($players[$key]->turn == 0)
             echo json_encode(['status' => 'success', 'ready' => false]);
@@ -42,10 +38,9 @@
         }
 
         if ($ready && sizeof($players) > 1) {
-            $query = "UPDATE gry SET state = 1 WHERE id = ?";
-            $stmt = $mysqli->prepare($query);
-            $stmt->bind_param("i", $_SESSION["gameId"]);
-            $stmt->execute();
+            updateGameData($mysqli,$_SESSION["gameId"],$data,1);
+        }else{
+            updateGameData($mysqli,$_SESSION["gameId"],$data,0);
         }
     }
 ?>

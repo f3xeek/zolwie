@@ -1,13 +1,8 @@
 import { gets } from "./api"
 import { renderPlayerCells, drawGameBoard,renderPlayerChip,renderPlayerHand } from "./render"
-import { iTurtle } from "./interfaces";
-
 import spritesheet from "./spritesheet";
 
 window.addEventListener("load", async () => {
-    const testturtle = {color:"blue" , position:[1,0]} as iTurtle
-    drawGameBoard([testturtle, testturtle, testturtle, testturtle, testturtle]);
-    renderPlayerChip(false);
     const data = await gets.getPlayerLobby();
     const pathParts = window.location.pathname.split("/");
     pathParts.pop();
@@ -19,6 +14,9 @@ window.addEventListener("load", async () => {
             renderPlayerCells(data.players, data.selfId, true);
         }
     }
+    const gamedata = await gets.getGamestate();
+    if (gamedata.turtles) drawGameBoard(gamedata.turtles);
+    renderPlayerChip(false);
     const clearSessionButton = document.getElementById("clearSession");
     if(clearSessionButton) clearSessionButton.addEventListener("click", gets.clearSession);
 })

@@ -1,9 +1,11 @@
 <?php 
+include "game.php";
 class Player
 {
     public $id;
     public $name;
     public $turn = 0;
+    public $startOfTurn = 0;
     public function __construct($id, $name)
     {
         $this->name = $name;
@@ -32,16 +34,16 @@ function joinNewGame($mysqli,$nickname)
 
         $count = sizeof($players);
         $players[] = new Player($count, $nickname);
-        $data = json_encode(["players" => $players]);
+        $turtles = [["color"=>"blue", "position"=>[0,0]],["color"=>"green", "position"=>[0,1]],["color"=>"red", "position"=>[0,2]],["color"=>"purple", "position"=>[0,3]],["color"=>"yellow", "position"=>[0,4]]];
+        $data = json_encode(["players" => $players, "turtles"=>$turtles]);
         $state = 0;
-        if ($count >= 4)
+        if ($count >= 4){
             $state = 1;
+            beginGame($mysqli);
+        }
         if ($ingame) {
-            $query = "UPDATE gry SET state = ?, data = ? WHERE id = ?";
-            $stmt = $mysqli->prepare($query);
             $gameId = $row["id"];
-            $stmt->bind_param("iss", $state, $data, $gameId);
-            $stmt->execute();
+            updateGameData($mysqli,$row["id"],$data, $state);
         } else {
             $query = "INSERT INTO gry(data,state) VALUES(?,?) ";
             $stmt = $mysqli->prepare($query);
