@@ -20,4 +20,8 @@ interface iSpritesheet {
     };
     getByName(name: string): iSprite | undefined;
 }
-export { Player, iSprite, iSpritesheet };
+interface iTurtle {
+    color:string,
+    position:[number,number]
+}
+export { Player, iSprite, iSpritesheet, iTurtle };

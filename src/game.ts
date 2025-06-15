@@ -1,10 +1,12 @@
 import { gets } from "./api"
 import { renderPlayerCells, drawGameBoard,renderPlayerChip,renderPlayerHand } from "./render"
+import { iTurtle } from "./interfaces";
 
-import sheet from "./spritesheet";
+import spritesheet from "./spritesheet";
 
 window.addEventListener("load", async () => {
-    drawGameBoard();
+    const testturtle = {color:"blue" , position:[1,0]} as iTurtle
+    drawGameBoard([testturtle, testturtle, testturtle, testturtle, testturtle]);
     renderPlayerChip(false);
     const data = await gets.getPlayerLobby();
     const pathParts = window.location.pathname.split("/");
@@ -18,5 +20,5 @@ window.addEventListener("load", async () => {
         }
     }
 })
-const test = sheet.getByName("card_blue_plus");
+const test = spritesheet.getByName("card_blue_plus");
 if (test) renderPlayerHand([test,test, test, test, test], -1,true);

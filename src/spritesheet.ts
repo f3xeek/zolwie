@@ -63,7 +63,7 @@ class Spritesheet implements iSpritesheet {
     }
 }
 
-const sheet = new Spritesheet()
-sheet.load()
+const spritesheet = new Spritesheet()
+spritesheet.load();
 
-export default sheet
+export default spritesheet;
